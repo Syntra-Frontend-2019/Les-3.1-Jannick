@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="inputField" cols="30" rows="10" onkeyup="updateValues();"></textarea>
+
+    <p><strong>aantal letters:</strong> <span id="letterCount">...</span></p>
+    <p><strong>aantal woorden:</strong> <span id="wordCount">...</span></p>
+    <p><strong>laatste woord:</strong> <span class="lastWord">...</span></p>
+    <p><strong>Syntra komt voor:</strong> <span id="containsSyntra">...</span></p>
+
+    <p>
+        <button onclick="toUpper();">To Uppercase</button>
+        <button onclick="toLower();">To Lowercase</button>
+        <button onclick="toCamelCase();">To CamelCase</button>
+    </p>
+
+    <script>
+        var letterCount = document.getElementById("letterCount");
+        var wordCount = document.querySelector("#wordCount");
+        var lastWord = document.querySelector(".lastWord");
+        var containsSyntra = document.querySelector("#containsSyntra");
+        var inputField = document.querySelector("#inputField");
+
+        function updateValues(){
+            var text = inputField.value;
+            var woorden = text.split(' ');
+
+            letterCount.innerHTML = text.length; 
+            wordCount.innerHTML = woorden.length;
+            lastWord.innerHTML = woorden[woorden.length - 1];
+
+            var lowerCaseText = text.toLowerCase();
+            if(lowerCaseText.indexOf("syntra") != -1){
+                containsSyntra.innerHTML = "Waar";
+            } else {
+                containsSyntra.innerHTML = "Niet Waar";
+            }
+        }
+
+        function toLower(){
+            var text = inputField.value;
+            var lowerCaseText = text.toLowerCase();
+            //inputField.innerHTML = lowerCaseText; WERKT NIET => Formulier veld!
+            inputField.value = lowerCaseText;
+        }
+
+        function toUpper(){
+            var text = inputField.value;
+            var upperCaseText = text.toUpperCase();
+            inputField.value = upperCaseText;
+        }
+
+        function toCamelCase(){
+            var text = inputField.value;
+            var woorden = text.split(' ');
+
+            for(var i = 0; i < woorden.length; i++){
+                var woord = woorden[i];
+                var eersteLetter = woord.charAt(0);
+                var eersteHoofdletter = eersteLetter.toUpperCase();
+                var nieuwWoord = eersteHoofdletter + woord.substring(1, woord.length);
+                woorden[i] = nieuwWoord;
+            }
+
+            inputField.value = woorden.join(' ');
+        }
+    </script>
+</body>
+</html>
